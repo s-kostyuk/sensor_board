@@ -118,6 +118,7 @@
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(150, 86);
             this.panel8.TabIndex = 7;
+            this.panel8.DoubleClick += new System.EventHandler(this.panel8_DoubleClick);
             // 
             // Form1
             // 

@@ -16,5 +16,15 @@ namespace ss_course_project
         {
             InitializeComponent();
         }
+
+        private void panel8_DoubleClick(object sender, EventArgs e)
+        {
+            var new_size = this.panel1.Size;
+
+            new_size.Width = new_size.Width * 3;
+            new_size.Height = new_size.Height * 2;
+
+            this.panel1.Size = new_size;
+        }
     }
 }
