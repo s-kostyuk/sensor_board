@@ -16,9 +16,29 @@ namespace ss_course_project
     {
         /*-------------------------------------------------------------------*/
 
+        const int card_padding = 3;
+        const int standart_card_height = 86;
+        const int standart_card_width = 144;
+        static Size standart_card_size = new Size(standart_card_width, standart_card_height);
+        static Size large_card_size = get_size_of_card(3, 2);
+
+        /*-------------------------------------------------------------------*/
+
         public Form1()
         {
             InitializeComponent();
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        private static Size get_size_of_card(int width_in_cards, int height_in_cards)
+        {
+            const int sum_padding = card_padding * 2;
+
+            return new Size(
+                  standart_card_width  * width_in_cards  + sum_padding * (width_in_cards  - 1)
+                , standart_card_height * height_in_cards + sum_padding * (height_in_cards - 1)
+            );
         }
 
         /*-------------------------------------------------------------------*/
@@ -57,12 +77,27 @@ namespace ss_course_project
 
         /*-------------------------------------------------------------------*/
 
-        private void set_standart_panel_props(Panel panel, int index = 0)
+        private void set_base_panel_props(Panel panel, int index = 0)
         {
             panel.BackColor = System.Drawing.SystemColors.Window;
             panel.Name = string.Format("panel{0}", index);
-            panel.Size = new System.Drawing.Size(144, 86);
             panel.TabIndex = index;
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        private void set_big_panel_props(Panel panel, int index = 0)
+        {
+            set_base_panel_props(panel, index);
+            panel.Size = large_card_size;
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        private void set_standart_panel_props(Panel panel, int index = 0)
+        {
+            set_base_panel_props(panel, index);
+            panel.Size = standart_card_size;
         }
 
         /*-------------------------------------------------------------------*/
@@ -103,18 +138,29 @@ namespace ss_course_project
         {
             foreach (Panel p in this.panelCards.Controls)
             {
-                if (p == this.panelAddCard)
+                if (p.Controls.ContainsKey("labelValue"))
                 {
-                    break;
+                    p.Controls["labelValue"].Text = string.Format("{0} °C", rand.Next(20, 31));
                 }
-
-                p.Controls["labelValue"].Text = string.Format("{0} °C", rand.Next(20, 31));
             } 
         }
 
         /*-------------------------------------------------------------------*/
 
         Random rand = new Random();
+
+        /*-------------------------------------------------------------------*/
+
+        private void enableLargePanelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Panel largeCard = new Panel();
+
+            set_big_panel_props(largeCard, 0);
+
+            this.panelCards.Controls.Add(largeCard);
+
+            movePanelAddCard(1);
+        }
 
         /*-------------------------------------------------------------------*/
     }

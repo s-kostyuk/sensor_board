@@ -32,6 +32,7 @@
             this.panelAddCard = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableLargePanelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelCards.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -60,7 +61,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.updateToolStripMenuItem});
+            this.updateToolStripMenuItem,
+            this.enableLargePanelToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(501, 24);
@@ -73,6 +75,13 @@
             this.updateToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.updateToolStripMenuItem.Text = "Update";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
+            // 
+            // enableLargePanelToolStripMenuItem
+            // 
+            this.enableLargePanelToolStripMenuItem.Name = "enableLargePanelToolStripMenuItem";
+            this.enableLargePanelToolStripMenuItem.Size = new System.Drawing.Size(118, 20);
+            this.enableLargePanelToolStripMenuItem.Text = "Enable Large Panel";
+            this.enableLargePanelToolStripMenuItem.Click += new System.EventHandler(this.enableLargePanelToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -98,6 +107,7 @@
         private System.Windows.Forms.Panel panelAddCard;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableLargePanelToolStripMenuItem;
     }
 }
 
