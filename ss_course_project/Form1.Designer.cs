@@ -1,4 +1,4 @@
-﻿namespace ss_course_project
+﻿namespace ss_course_project.gui
 {
     partial class Form1
     {
@@ -50,7 +50,7 @@
             // panelAddCard
             // 
             this.panelAddCard.BackColor = System.Drawing.SystemColors.Window;
-            this.panelAddCard.BackgroundImage = global::ss_course_project.Properties.Resources.course_plus_sign;
+            this.panelAddCard.BackgroundImage = global::ss_course_project.gui.Properties.Resources.course_plus_sign;
             this.panelAddCard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panelAddCard.Location = new System.Drawing.Point(3, 3);
             this.panelAddCard.Name = "panelAddCard";

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 /*****************************************************************************/
 
-namespace ss_course_project
+namespace ss_course_project.gui
 {
     public partial class Form1 : Form
     {

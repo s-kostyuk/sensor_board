@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ss_course_project
+namespace ss_course_project.gui
 {
     static class Program
     {
