@@ -77,6 +77,43 @@ namespace ss_course_project
 
         /*-------------------------------------------------------------------*/
 
+        private void fill_large_panel(Panel panel)
+        {
+            System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+
+            chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(chart1)).BeginInit();
+
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
+            chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            chart1.Legends.Add(legend1);
+            chart1.Location = new System.Drawing.Point(0, 0);
+            chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chart1.Series.Add(series1);
+            chart1.Size = new System.Drawing.Size(444, 178);
+            chart1.TabIndex = 0;
+            chart1.Text = "chart1";
+
+            panel.Controls.Add(chart1);
+
+            ((System.ComponentModel.ISupportInitialize)(chart1)).EndInit();
+
+        }
+
+        /*-------------------------------------------------------------------*/
+
         private void set_base_panel_props(Panel panel, int index = 0)
         {
             panel.BackColor = System.Drawing.SystemColors.Window;
@@ -165,6 +202,7 @@ namespace ss_course_project
             Panel largeCard = new Panel();
 
             set_big_panel_props(largeCard, 0);
+            fill_large_panel(largeCard);
 
             this.panelCards.Controls.Add(largeCard);
             this.panelCards.Controls.SetChildIndex(largeCard, 0);
