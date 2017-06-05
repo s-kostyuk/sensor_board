@@ -121,6 +121,15 @@ namespace ss_course_project
 
         /*-------------------------------------------------------------------*/
 
+        private void moveToLastPanelAddCard()
+        {
+            int last_index = this.panelCards.Controls.Count - 1;
+
+            movePanelAddCard(last_index);
+        }
+
+        /*-------------------------------------------------------------------*/
+
         private void panelAddCard_Click(object sender, EventArgs e)
         {
             int new_index = this.panelCards.Controls.Count - 1;
@@ -158,8 +167,9 @@ namespace ss_course_project
             set_big_panel_props(largeCard, 0);
 
             this.panelCards.Controls.Add(largeCard);
+            this.panelCards.Controls.SetChildIndex(largeCard, 0);
 
-            movePanelAddCard(1);
+            moveToLastPanelAddCard();
         }
 
         /*-------------------------------------------------------------------*/
