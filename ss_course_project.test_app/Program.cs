@@ -47,8 +47,18 @@ namespace ss_course_project.test_app
 
             MqttTempSensor tulip = await sb.Build(tulip_setting);
 
+            MqttSensorSetting notebook_setting = new MqttSensorSetting();
+
+            notebook_setting.Id = Guid.NewGuid();
+            notebook_setting.QosLevel = MqttQualityOfService.AtLeastOnce;
+            notebook_setting.Topic = "/sensors/book1/cpu";
+            notebook_setting.ConnectionId = cs.ClientId;
+
+            MqttTempSensor notebook = await sb.Build(notebook_setting);
+
             sensor.PropertyChanged += Sensor_PropertyChanged;
             tulip.PropertyChanged += Sensor_PropertyChanged;
+            notebook.PropertyChanged += Sensor_PropertyChanged;
 
             SaveSettings();
         }
