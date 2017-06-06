@@ -26,6 +26,7 @@ namespace ss_course_project.services.Settings
     {
         public string Host     { get; set; }
         public int    Port     { get; set; }
+        public string ClientPubicId { get; set; }
         public Guid   ClientId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }

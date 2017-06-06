@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 using System.Net.Mqtt;
 
+using ss_course_project.services.Repositories;
+using ss_course_project.services.Settings;
+using ss_course_project.services.Model;
+
+
 namespace ss_course_project.test_app
 {
     class Program
@@ -20,37 +25,52 @@ namespace ss_course_project.test_app
 
         static async void MqttInit()
         {
-            var client = await MqttClient.CreateAsync("ks-cube.tk");
+            cs = new MqttClientSetting();
+            cs.ClientId = Guid.NewGuid();
+            cs.ClientPubicId = "SensorBoard";
+            cs.Host = ".....";
+            cs.Port = 1883;
 
-            await client.ConnectAsync(new MqttClientCredentials("SensorBoard"));
+            connection_guid = Guid.NewGuid();
 
-            await client.SubscribeAsync("/sensors/TEMP1", MqttQualityOfService.AtLeastOnce);
+            connections = new ConnectionRepo();
+            client = await MqttClientBuilder.Build(cs);
 
-            SensorObserver so = new SensorObserver();
+            connections.AddClient(connection_guid, client);
 
-            client.MessageStream.Subscribe(so);
+            ss = new MqttSensorSetting();
+            ss.Id = Guid.NewGuid();
+            ss.QosLevel = MqttQualityOfService.AtLeastOnce;
+            ss.Topic = "/sensors/TEMP1";
+            ss.ConnectionId = connection_guid;
+
+            sb = new MqttSensorBuilder(connections);
+            sensor = await sb.Build(ss);
+
+            sensor.PropertyChanged += Sensor_PropertyChanged;
         }
-    }
 
-    class SensorObserver : IObserver<MqttApplicationMessage>
-    {
-        public void OnCompleted()
+        private static void Sensor_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Console.WriteLine("Completed");
+            MqttTempSensor sensor = (MqttTempSensor)sender;
+
+            Console.WriteLine(
+                string.Format(
+                    "Sensor value updated:\nID: {0}\nValue: {1}\nLastUpdated: {2}\n"
+                    , sensor.Id.ToString()
+                    , sensor.Value
+                    , sensor.LastUpdated.ToString()
+                    )
+                    );
         }
 
-        public void OnError(Exception error)
-        {
-            Console.WriteLine(string.Format("Error: {0}", error.Message));
-        }
-
-        public void OnNext(MqttApplicationMessage message)
-        {
-            Console.WriteLine("\nNew message received");
-            Console.WriteLine(DateTime.Now);
-            Console.WriteLine(message.Topic);
-            Console.WriteLine(Encoding.UTF8.GetString(message.Payload));
-        }
+        private static IMqttClient client;
+        private static Guid connection_guid;
+        private static MqttClientSetting cs;
+        private static MqttSensorSetting ss;
+        private static ConnectionRepo connections;
+        private static MqttTempSensor sensor;
+        private static MqttSensorBuilder sb;
     }
 }
 

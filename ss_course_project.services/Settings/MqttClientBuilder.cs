@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using System.Net.Mqtt;
@@ -17,11 +18,12 @@ namespace ss_course_project.services.Settings
 
             await client.ConnectAsync(
                 new MqttClientCredentials(
-                      clientId: settings.ClientId.ToString()
+                      clientId: settings.ClientPubicId
                     , userName: settings.UserName
                     , password: settings.Password
                     )
                 );
+
 
             return client;
         }
