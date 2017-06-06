@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using uPLibrary.Networking.M2Mqtt;
-using uPLibrary.Networking.M2Mqtt.Messages;
+
+using System.Net.Mqtt;
 
 namespace ss_course_project.test_app
 {
@@ -12,22 +13,46 @@ namespace ss_course_project.test_app
     {
         static void Main(string[] args)
         {
-            MqttClient client = new MqttClient("....");
-            client.Connect("Sensor-Board");
+            MqttInit();
 
-            client.Subscribe(new string[]{ "/sensors/TEMP1"}, new byte[]{ MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
-
-            client.MqttMsgPublishReceived += Client_MqttMsgPublishReceived;
+            Thread.Sleep(Timeout.Infinite);
         }
 
-        private static void Client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        static async void MqttInit()
         {
-            Console.WriteLine(string.Format("\nNew message received\n{0}", DateTime.Now));
-            Console.WriteLine(
-                string.Format("topic: {0}\nmessage: {1}",
-                    e.Topic, System.Text.Encoding.UTF8.GetString(e.Message)
-                )
-                );
+            var client = await MqttClient.CreateAsync(".....");
+
+            await client.ConnectAsync(new MqttClientCredentials("SensorBoard"));
+
+            await client.SubscribeAsync("/sensors/TEMP1", MqttQualityOfService.AtLeastOnce);
+
+            SensorObserver so = new SensorObserver();
+
+            client.MessageStream.Subscribe(so);
+        }
+    }
+
+    class SensorObserver : IObserver<MqttApplicationMessage>
+    {
+        public void OnCompleted()
+        {
+            Console.WriteLine("Completed");
+        }
+
+        public void OnError(Exception error)
+        {
+            Console.WriteLine(string.Format("Error: {0}", error.Message));
+        }
+
+        public void OnNext(MqttApplicationMessage message)
+        {
+            Console.WriteLine("New message received");
+            Console.WriteLine(DateTime.Now);
+            Console.WriteLine(message.Topic);
+            Console.WriteLine(Encoding.UTF8.GetString(message.Payload));
         }
     }
 }
+
+
+
