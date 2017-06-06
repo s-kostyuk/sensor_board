@@ -39,8 +39,8 @@ namespace ss_course_project.services.Model
             private set
             {
                 m_value = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Value"));
                 m_last_updated = DateTime.UtcNow;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Value"));
             }
         }
 
