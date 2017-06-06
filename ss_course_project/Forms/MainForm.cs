@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using ss_course_project.services.Repositories;
+
 /*****************************************************************************/
 
 namespace ss_course_project.gui
@@ -107,7 +109,7 @@ namespace ss_course_project.gui
             Panel new_panel = new Panel();
             set_standart_panel_props(new_panel, index);
             fill_standart_panel(new_panel);
-
+            
             return new_panel;
         }
 
@@ -134,6 +136,8 @@ namespace ss_course_project.gui
         {
             int new_index = this.panelCards.Controls.Count - 1;
 
+            
+
             Panel new_panel = get_standart_panel(new_index);
 
             this.panelCards.Controls.Add(new_panel);
@@ -156,7 +160,9 @@ namespace ss_course_project.gui
 
         /*-------------------------------------------------------------------*/
 
-        Random rand = new Random();
+        private Random rand = new Random();
+        private SensorsRepository sensors;
+        private Updaters.UpdatersRepository updaters = new Updaters.UpdatersRepository();
 
         /*-------------------------------------------------------------------*/
 
