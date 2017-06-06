@@ -1,6 +1,6 @@
 ﻿namespace ss_course_project.gui
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -83,7 +83,7 @@
             this.enableLargePanelToolStripMenuItem.Text = "Enable Large Panel";
             this.enableLargePanelToolStripMenuItem.Click += new System.EventHandler(this.enableLargePanelToolStripMenuItem_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -91,8 +91,8 @@
             this.Controls.Add(this.panelCards);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MainForm";
+            this.Text = "Sensor-Board v0.1";
             this.panelCards.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

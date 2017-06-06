@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ss_course_project.gui
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         /*-------------------------------------------------------------------*/
 
@@ -24,7 +24,7 @@ namespace ss_course_project.gui
 
         /*-------------------------------------------------------------------*/
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
