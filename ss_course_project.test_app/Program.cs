@@ -31,7 +31,7 @@ namespace ss_course_project.test_app
             //GenerateSettings();
             connections = new ConnectionRepo();
 
-            sb = new MqttSensorBuilder(connections);
+            sensor_builder = new MqttSensorBuilder(connections);
             
             foreach (var item in settings.ClientSettings)
             {
@@ -41,7 +41,7 @@ namespace ss_course_project.test_app
 
             foreach (var item in settings.SensorSettings)
             {
-                MqttTempSensor sensor = await sb.Build(item.Value);
+                MqttTempSensor sensor = await sensor_builder.Build(item.Value);
                 sensor.PropertyChanged += Sensor_PropertyChanged;
                 sensors.Add(sensor);
             }
@@ -51,37 +51,39 @@ namespace ss_course_project.test_app
 
         private static void GenerateSettings()
         {
-            MqttSensorSetting ss;
-            MqttClientSetting cs;
+            
+            MqttClientSetting main_broker;
 
-            cs = new MqttClientSetting();
-            cs.ClientId = Guid.NewGuid();
-            cs.ClientPubicId = "SensorBoard";
-            cs.Host = ".....";
-            cs.Port = 1883;
+            main_broker = new MqttClientSetting();
+            main_broker.ClientId = Guid.NewGuid();
+            main_broker.ClientPubicId = "SensorBoard";
+            main_broker.Host = ".....";
+            main_broker.Port = 1883;
 
-            ss = new MqttSensorSetting();
-            ss.Id = Guid.NewGuid();
-            ss.QosLevel = MqttQualityOfService.AtLeastOnce;
-            ss.Topic = "/sensors/TEMP1";
-            ss.ConnectionId = cs.ClientId;
+            MqttSensorSetting room_sensor;
+
+            room_sensor = new MqttSensorSetting();
+            room_sensor.Id = Guid.NewGuid();
+            room_sensor.QosLevel = MqttQualityOfService.AtLeastOnce;
+            room_sensor.Topic = "/sensors/TEMP1";
+            room_sensor.ConnectionId = main_broker.ClientId;
             
             MqttSensorSetting tulip_setting = new MqttSensorSetting();
 
             tulip_setting.Id = Guid.NewGuid();
             tulip_setting.QosLevel = MqttQualityOfService.AtLeastOnce;
             tulip_setting.Topic = "/sensors/tulip";
-            tulip_setting.ConnectionId = cs.ClientId;
+            tulip_setting.ConnectionId = main_broker.ClientId;
             
             MqttSensorSetting notebook_setting = new MqttSensorSetting();
 
             notebook_setting.Id = Guid.NewGuid();
             notebook_setting.QosLevel = MqttQualityOfService.AtLeastOnce;
             notebook_setting.Topic = "/sensors/book1/cpu";
-            notebook_setting.ConnectionId = cs.ClientId;
+            notebook_setting.ConnectionId = main_broker.ClientId;
 
-            settings.AddClientSetting(cs.ClientId, cs);
-            settings.AddSensorSetting(ss.Id, ss);
+            settings.AddClientSetting(main_broker.ClientId, main_broker);
+            settings.AddSensorSetting(room_sensor.Id, room_sensor);
             settings.AddSensorSetting(tulip_setting.Id, tulip_setting);
             settings.AddSensorSetting(notebook_setting.Id, notebook_setting);
         }
@@ -133,23 +135,11 @@ namespace ss_course_project.test_app
 
         private static SettingsRepository settings = new SettingsRepository();
         private static ConnectionRepo connections;
-        private static MqttSensorBuilder sb;
+        private static MqttSensorBuilder sensor_builder;
         private static List<MqttTempSensor> sensors = new List<MqttTempSensor>();
     }
 
-    class SettingHandler
-    {
-        public SettingHandler(MqttClientSetting cs, MqttSensorSetting ss)
-        {
-            this.cs = cs;
-            this.ss = ss;
-        }
-
-        public MqttClientSetting cs { get; set; }
-        public MqttSensorSetting ss { get; set; }
-    }
-
-
+    
 }
 
 
