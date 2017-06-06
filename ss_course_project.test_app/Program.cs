@@ -65,7 +65,7 @@ namespace ss_course_project.test_app
             ss.QosLevel = MqttQualityOfService.AtLeastOnce;
             ss.Topic = "/sensors/TEMP1";
             ss.ConnectionId = cs.ClientId;
-
+            
             MqttSensorSetting tulip_setting = new MqttSensorSetting();
 
             tulip_setting.Id = Guid.NewGuid();
@@ -92,7 +92,8 @@ namespace ss_course_project.test_app
 
             Console.WriteLine(
                 string.Format(
-                    "Sensor value updated:\nID: {0}\nValue: {1}\nLastUpdated: {2}\n"
+                    "Sensor value updated:\nName: {0}\nID: {1}\nValue: {2}\nLastUpdated: {3}\n"
+                    , sensor.FriendlyName
                     , sensor.Id.ToString()
                     , sensor.Value
                     , sensor.LastUpdated.ToString()

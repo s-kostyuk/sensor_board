@@ -14,5 +14,6 @@ namespace ss_course_project.services.Model
         T Value { get; }
         DateTime LastUpdated { get; }
         string Units { get; set; }
+        string FriendlyName { get; set; }
     }
 }

@@ -76,19 +76,32 @@ namespace ss_course_project.services.Model
 
         /*-------------------------------------------------------------------*/
 
+        public string FriendlyName
+        {
+            get { return m_friendly_name; }
+            set
+            {
+                m_friendly_name = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FriendlyName"));
+            }
+        }
+
+        /*-------------------------------------------------------------------*/
+
         public MqttSensor(Guid id, string topic, string units = null)
             : base(id)
         {
             m_topic = topic;
             m_units = units;
         }
-
+        
         /*-------------------------------------------------------------------*/
 
         private string m_topic;
         private T m_value;
         private DateTime m_last_updated;
         private string m_units;
+        private string m_friendly_name;
 
         /*-------------------------------------------------------------------*/
 

@@ -37,6 +37,7 @@ namespace ss_course_project.services.Settings
         {
             IMqttClient client = m_connections.GetClient(settings.ConnectionId);
             MqttTempSensor sensor = new MqttTempSensor(settings.Id, settings.Topic);
+            sensor.FriendlyName = settings.FriendlyName;
 
             // FIXME: CC6
             await client.SubscribeAsync(settings.Topic, settings.QosLevel);
