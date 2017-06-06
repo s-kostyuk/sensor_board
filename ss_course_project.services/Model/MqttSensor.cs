@@ -25,7 +25,6 @@ using System.Net.Mqtt;
 namespace ss_course_project.services.Model
 {
     public abstract class MqttSensor<T> : BasicEntity, IMqttSensor<T>
-        where T: IConvertible
     {
         /*-------------------------------------------------------------------*/
 
@@ -75,10 +74,9 @@ namespace ss_course_project.services.Model
 
         /*-------------------------------------------------------------------*/
 
-        public MqttSensor(Guid id, IMqttClient client, string topic, string units = null)
+        public MqttSensor(Guid id, string topic, string units = null)
             : base(id)
         {
-            m_client = client;
             m_topic = topic;
             m_units = units;
         }
@@ -86,7 +84,6 @@ namespace ss_course_project.services.Model
         /*-------------------------------------------------------------------*/
 
         private string m_topic;
-        private IMqttClient m_client;
         private T m_value;
         private DateTime m_last_updated;
         private string m_units;

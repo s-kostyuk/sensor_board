@@ -16,8 +16,8 @@ namespace ss_course_project.services.Model
     {
         /*-------------------------------------------------------------------*/
 
-        public MqttTempSensor(Guid id, IMqttClient client, string topic, string units = "°C")
-            : base(id, client, topic, units)
+        public MqttTempSensor(Guid id, string topic, string units = "°C")
+            : base(id, topic, units)
         {
         }
 
