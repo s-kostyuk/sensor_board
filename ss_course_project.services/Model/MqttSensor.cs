@@ -5,6 +5,7 @@
  * CC3 - разрешить смену параметров после создания
  * СС4 - подписываться на тему в момент консруирования
  * CC5 - add Dispatcher
+ * CC7 - Unsubscribe on disposal
  */
 
 /*****************************************************************************/
@@ -24,6 +25,7 @@ using System.Net.Mqtt;
 
 namespace ss_course_project.services.Model
 {
+    // FIXME: CC7
     public abstract class MqttSensor<T> : BasicEntity, IMqttSensor<T>
     {
         /*-------------------------------------------------------------------*/

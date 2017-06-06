@@ -1,12 +1,28 @@
-﻿using System;
+﻿/*****************************************************************************/
+
+/* FIXME List:
+ Consider Change:
+ * CC6 - Add Subscription Manager
+ * CC7 - Unsubscribe on disposal
+ */
+
+/*****************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*****************************************************************************/
+
 using System.Net.Mqtt;
 
+/*****************************************************************************/
+
 using ss_course_project.services.Model;
+
+/*****************************************************************************/
 
 namespace ss_course_project.services.Settings
 {
@@ -17,13 +33,22 @@ namespace ss_course_project.services.Settings
             m_connections = connections;
         }
 
-        private ISensor Build(MqttSensorSetting settings)
+        public async Task<MqttTempSensor> Build(MqttSensorSetting settings)
         {
             IMqttClient client = m_connections.GetClient(settings.ConnectionId);
+            MqttTempSensor sensor = new MqttTempSensor(settings.Id, settings.Topic);
 
-            return new ISensor();
+            // FIXME: CC6
+            await client.SubscribeAsync(settings.Topic, settings.QosLevel);
+
+            // FIXME: CC7
+            client.MessageStream.Subscribe(sensor);
+
+            return sensor;
         }
 
         Repositories.ConnectionRepo m_connections;
     }
 }
+
+/*****************************************************************************/
