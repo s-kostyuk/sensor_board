@@ -16,5 +16,5 @@
 
 ### Видео с демонстрацией работы
 
-Целый плейлист: [https://www.youtube.com/playlist?list=PLLO36r3VITBgGM_nxzLbXlqepzrdAeCpJ](на YouTube). 
+Целый плейлист: (https://www.youtube.com/playlist?list=PLLO36r3VITBgGM_nxzLbXlqepzrdAeCpJ)[на YouTube]. 
 Видео - в хронологическом порядке. От первого прототипа до самого свежего.
