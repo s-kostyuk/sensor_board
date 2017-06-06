@@ -103,7 +103,7 @@
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel panelCards;
+        public System.Windows.Forms.FlowLayoutPanel panelCards;
         private System.Windows.Forms.Panel panelAddCard;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;

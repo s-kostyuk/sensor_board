@@ -27,6 +27,8 @@ namespace ss_course_project.gui
         public Form1()
         {
             InitializeComponent();
+
+            panelAddCard_Click(null, null);
         }
 
         /*-------------------------------------------------------------------*/
