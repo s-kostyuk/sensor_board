@@ -43,7 +43,7 @@ namespace ss_course_project.test_app
             {
                 MqttTempSensor sensor = await sensor_builder.Build(item.Value);
                 sensor.PropertyChanged += Sensor_PropertyChanged;
-                sensors.Add(sensor);
+                sensors.Sensors.Add(sensor);
             }
 
             SaveSettings();
@@ -136,7 +136,7 @@ namespace ss_course_project.test_app
         private static SettingsRepository settings = new SettingsRepository();
         private static ConnectionRepo connections;
         private static MqttSensorBuilder sensor_builder;
-        private static List<MqttTempSensor> sensors = new List<MqttTempSensor>();
+        private static SensorsRepository sensors = new SensorsRepository();
     }
 
     
