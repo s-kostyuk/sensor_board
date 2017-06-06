@@ -4,6 +4,7 @@
  Consider Change:
  * CC3 - разрешить смену параметров после создания
  * СС4 - подписываться на тему в момент консруирования
+ * CC5 - add Dispatcher
  */
 
 /*****************************************************************************/
@@ -23,7 +24,8 @@ using System.Net.Mqtt;
 
 namespace ss_course_project.services.Model
 {
-    class MqttSensor<T> : BasicEntity, ISensor<T>
+    public abstract class MqttSensor<T> : BasicEntity, IMqttSensor<T>
+        where T: IConvertible
     {
         /*-------------------------------------------------------------------*/
 
@@ -92,6 +94,36 @@ namespace ss_course_project.services.Model
         /*-------------------------------------------------------------------*/
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /*-------------------------------------------------------------------*/
+
+        protected abstract T Decode(byte[] value);
+        
+        /*-------------------------------------------------------------------*/
+
+        public void OnNext(MqttApplicationMessage value)
+        {
+            if (value.Topic == m_topic) // FIMXE: CC5
+            {
+                T new_value = Decode(value.Payload);
+
+                Value = new_value;
+            }
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        public void OnError(Exception error)
+        {
+            // do_nothing
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        public void OnCompleted()
+        {
+            // do_nothing
+        }
 
         /*-------------------------------------------------------------------*/
     }
