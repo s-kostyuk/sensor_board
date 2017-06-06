@@ -20,7 +20,7 @@ namespace ss_course_project.test_app
 
         static async void MqttInit()
         {
-            var client = await MqttClient.CreateAsync(".....");
+            var client = await MqttClient.CreateAsync("ks-cube.tk");
 
             await client.ConnectAsync(new MqttClientCredentials("SensorBoard"));
 
@@ -46,7 +46,7 @@ namespace ss_course_project.test_app
 
         public void OnNext(MqttApplicationMessage message)
         {
-            Console.WriteLine("New message received");
+            Console.WriteLine("\nNew message received");
             Console.WriteLine(DateTime.Now);
             Console.WriteLine(message.Topic);
             Console.WriteLine(Encoding.UTF8.GetString(message.Payload));
