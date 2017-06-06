@@ -88,6 +88,7 @@
     <Compile Include="Model\MqttTempSensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ConnectionRepo.cs" />
+    <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="Settings\MqttClientBuilder.cs" />
     <Compile Include="Settings\MqttClientSetting.cs" />
     <Compile Include="Settings\MqttSensorBuilder.cs" />

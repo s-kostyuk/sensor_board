@@ -29,42 +29,31 @@ namespace ss_course_project.test_app
         {
             RestoreSettings();
             //GenerateSettings();
-
             connections = new ConnectionRepo();
-            client = await MqttClientBuilder.Build(cs);
-
-            connections.AddClient(cs.ClientId, client);
 
             sb = new MqttSensorBuilder(connections);
-            sensor = await sb.Build(ss);
+            
+            foreach (var item in settings.ClientSettings)
+            {
+                IMqttClient client = await MqttClientBuilder.Build(item.Value);
+                connections.AddClient(item.Value.ClientId, client);
+            }
 
-            MqttSensorSetting tulip_setting = new MqttSensorSetting();
-
-            tulip_setting.Id = Guid.NewGuid();
-            tulip_setting.QosLevel = MqttQualityOfService.AtLeastOnce;
-            tulip_setting.Topic = "/sensors/tulip";
-            tulip_setting.ConnectionId = cs.ClientId;
-
-            MqttTempSensor tulip = await sb.Build(tulip_setting);
-
-            MqttSensorSetting notebook_setting = new MqttSensorSetting();
-
-            notebook_setting.Id = Guid.NewGuid();
-            notebook_setting.QosLevel = MqttQualityOfService.AtLeastOnce;
-            notebook_setting.Topic = "/sensors/book1/cpu";
-            notebook_setting.ConnectionId = cs.ClientId;
-
-            MqttTempSensor notebook = await sb.Build(notebook_setting);
-
-            sensor.PropertyChanged += Sensor_PropertyChanged;
-            tulip.PropertyChanged += Sensor_PropertyChanged;
-            notebook.PropertyChanged += Sensor_PropertyChanged;
+            foreach (var item in settings.SensorSettings)
+            {
+                MqttTempSensor sensor = await sb.Build(item.Value);
+                sensor.PropertyChanged += Sensor_PropertyChanged;
+                sensors.Add(sensor);
+            }
 
             SaveSettings();
         }
 
         private static void GenerateSettings()
         {
+            MqttSensorSetting ss;
+            MqttClientSetting cs;
+
             cs = new MqttClientSetting();
             cs.ClientId = Guid.NewGuid();
             cs.ClientPubicId = "SensorBoard";
@@ -76,6 +65,25 @@ namespace ss_course_project.test_app
             ss.QosLevel = MqttQualityOfService.AtLeastOnce;
             ss.Topic = "/sensors/TEMP1";
             ss.ConnectionId = cs.ClientId;
+
+            MqttSensorSetting tulip_setting = new MqttSensorSetting();
+
+            tulip_setting.Id = Guid.NewGuid();
+            tulip_setting.QosLevel = MqttQualityOfService.AtLeastOnce;
+            tulip_setting.Topic = "/sensors/tulip";
+            tulip_setting.ConnectionId = cs.ClientId;
+            
+            MqttSensorSetting notebook_setting = new MqttSensorSetting();
+
+            notebook_setting.Id = Guid.NewGuid();
+            notebook_setting.QosLevel = MqttQualityOfService.AtLeastOnce;
+            notebook_setting.Topic = "/sensors/book1/cpu";
+            notebook_setting.ConnectionId = cs.ClientId;
+
+            settings.AddClientSetting(cs.ClientId, cs);
+            settings.AddSensorSetting(ss.Id, ss);
+            settings.AddSensorSetting(tulip_setting.Id, tulip_setting);
+            settings.AddSensorSetting(notebook_setting.Id, notebook_setting);
         }
 
         private static void Sensor_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -94,7 +102,7 @@ namespace ss_course_project.test_app
 
         private static void RestoreSettings()
         {
-            string path = "settings.json";
+            string path = "settings2.json";
 
             StreamReader reader = new StreamReader(
                 File.Open(path, FileMode.Open)
@@ -102,36 +110,30 @@ namespace ss_course_project.test_app
 
             string source_data = reader.ReadToEnd();
 
-            SettingHandler sh = JsonConvert.DeserializeObject <SettingHandler> (source_data);
-
-            ss = sh.ss;
-            cs = sh.cs;
+            settings = JsonConvert.DeserializeObject <SettingsRepository> (source_data);
 
             reader.Dispose();
         }
 
         private static void SaveSettings()
         {
-            string path = "settings.json";
+            string path = "settings2.json";
 
             StreamWriter writer = new StreamWriter(
                 File.Open(path, FileMode.OpenOrCreate)
                 );
 
             writer.Write(JsonConvert.SerializeObject(
-                new SettingHandler(cs, ss), Formatting.Indented
+                settings, Formatting.Indented
                 ));
 
             writer.Dispose();
         }
-        
 
-        private static IMqttClient client;
-        private static MqttClientSetting cs;
-        private static MqttSensorSetting ss;
+        private static SettingsRepository settings = new SettingsRepository();
         private static ConnectionRepo connections;
-        private static MqttTempSensor sensor;
         private static MqttSensorBuilder sb;
+        private static List<MqttTempSensor> sensors = new List<MqttTempSensor>();
     }
 
     class SettingHandler
