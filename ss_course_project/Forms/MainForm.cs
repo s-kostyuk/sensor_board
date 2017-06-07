@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using ss_course_project.services;
 using ss_course_project.services.Repositories;
 using ss_course_project.services.Settings;
 
@@ -27,9 +28,21 @@ namespace ss_course_project.gui.Forms
 
         /*-------------------------------------------------------------------*/
 
-        public MainForm()
+        public MainForm(Controller controller)
         {
+            m_controller = controller;
+
             InitializeComponent();
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        public void FillByController()
+        {
+            foreach (var item in m_controller.Sensors.Sensors)
+            {
+
+            }
         }
 
         /*-------------------------------------------------------------------*/
@@ -133,6 +146,21 @@ namespace ss_course_project.gui.Forms
 
         /*-------------------------------------------------------------------*/
 
+        private Panel AddPanelCard()
+        {
+            int new_index = this.panelCards.Controls.Count - 1;
+
+            Panel new_panel = get_standart_panel(new_index);
+
+            this.panelCards.Controls.Add(new_panel);
+
+            movePanelAddCard(new_index + 1);
+
+            return new_panel;
+        }
+
+        /*-------------------------------------------------------------------*/
+
         private void panelAddCard_Click(object sender, EventArgs e)
         {
             
@@ -144,13 +172,7 @@ namespace ss_course_project.gui.Forms
 
             if (result == DialogResult.OK)
             {
-                int new_index = this.panelCards.Controls.Count - 1;
-
-                Panel new_panel = get_standart_panel(new_index);
-
-                this.panelCards.Controls.Add(new_panel);
-
-                movePanelAddCard(new_index + 1);
+                AddPanelCard();
             }
         }
 
@@ -170,8 +192,8 @@ namespace ss_course_project.gui.Forms
         /*-------------------------------------------------------------------*/
 
         private Random rand = new Random();
-        private SensorsRepository sensors;
         private Updaters.UpdatersRepository updaters = new Updaters.UpdatersRepository();
+        private Controller m_controller;
 
         /*-------------------------------------------------------------------*/
 
