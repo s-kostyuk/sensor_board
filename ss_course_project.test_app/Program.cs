@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using System.IO.Ports;
 
 using System.Net.Mqtt;
 using Newtonsoft.Json;
@@ -21,9 +22,25 @@ namespace ss_course_project.test_app
     {
         static void Main(string[] args)
         {
-            Init();
+            string first_port_name = SerialPort.GetPortNames().First();
+
+            SerialPort port = new SerialPort(first_port_name, 115200);
+
+            port.DataReceived += Port_DataReceived;
+            //Init();
+
+            port.Open();
             
             Thread.Sleep(Timeout.Infinite);
+        }
+
+        private static void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort port = (SerialPort)sender;
+
+            string data = port.ReadLine();
+
+            Console.WriteLine(data);
         }
 
         private static async void Init()
