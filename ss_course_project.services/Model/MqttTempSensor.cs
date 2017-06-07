@@ -23,10 +23,27 @@ namespace ss_course_project.services.Model
 
         /*-------------------------------------------------------------------*/
 
+        // FIXME: Consider adding TryDecode() method
         protected override double Decode(byte[] value)
         {
             string value_as_str = Encoding.UTF8.GetString(value);
-            return double.Parse(value_as_str, NumberStyles.Any, CultureInfo.InvariantCulture);
+            double result;
+            bool is_parse_successful = double.TryParse(
+                value_as_str
+                , NumberStyles.Any
+                , CultureInfo.InvariantCulture
+                , out result
+                );
+
+            if (is_parse_successful)
+            {
+                return result;
+            }
+            else
+            {
+                // FIXME: Add logging here
+                return 0.0;
+            }
         }
 
         /*-------------------------------------------------------------------*/
