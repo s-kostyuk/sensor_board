@@ -1,4 +1,4 @@
-﻿namespace ss_course_project.gui
+﻿namespace ss_course_project.gui.Forms
 {
     partial class MainForm
     {

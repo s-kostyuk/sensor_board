@@ -12,7 +12,7 @@ using ss_course_project.services.Repositories;
 
 /*****************************************************************************/
 
-namespace ss_course_project.gui
+namespace ss_course_project.gui.Forms
 {
     public partial class MainForm : Form
     {
