@@ -20,7 +20,7 @@ using ss_course_project.services.Model;
 
 namespace ss_course_project.services
 {
-    public class Controller
+    public class Controller : IDisposable
     {
         /*-------------------------------------------------------------------*/
 
@@ -34,6 +34,13 @@ namespace ss_course_project.services
         public Controller()
         {
             m_sensor_builder = new MqttSensorBuilder(m_connections);
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        public void Dispose()
+        {
+            m_connections.Dispose();
         }
 
         /*-------------------------------------------------------------------*/
@@ -132,7 +139,7 @@ namespace ss_course_project.services
             m_settings.AddSensorSetting(tulip_setting.Id, tulip_setting);
             m_settings.AddSensorSetting(notebook_setting.Id, notebook_setting);
         }
-
+        
         /*-------------------------------------------------------------------*/
 
         private SettingsRepository m_settings = new SettingsRepository();

@@ -21,11 +21,22 @@ namespace ss_course_project.gui
             Application.SetCompatibleTextRenderingDefault(false);
 
             form = new MainForm(controller);
+
             Start();
-            Application.Run(form);
-            
+
+            form.Show();
+
+            form.FormClosed += m_mainForm_FormClosed;
+
+            Application.Run();
         }
 
+        static void m_mainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            controller.Dispose();
+            Application.ExitThread();
+        }
+        
         static async void Start()
         {
             await controller.Init();

@@ -21,7 +21,7 @@ using System.Net.Mqtt;
 
 namespace ss_course_project.services.Repositories
 {
-    public class ConnectionRepo
+    public class ConnectionRepo : IDisposable
     {
         public ConnectionRepo()
         {
@@ -38,9 +38,17 @@ namespace ss_course_project.services.Repositories
             m_clients.Add(clientId, client);
         }
 
+        public void Dispose()
+        {
+            foreach (var item in m_clients)
+            {
+                item.Value.Dispose();
+            }
+        }
+
         // FIXME: CC2
         //public void AddClient(Guid clientId, MqttClientSetting setting);
-        
+
         private Dictionary<Guid, IMqttClient> m_clients = new Dictionary<Guid, IMqttClient>();
     }
 }

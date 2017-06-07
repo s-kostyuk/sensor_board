@@ -40,23 +40,30 @@ namespace ss_course_project.gui.Updaters
         {
             Debug.Assert(ReferenceEquals(sender, this.m_sensor));
 
+            Action action = null;
+
             switch (e.PropertyName)
             {
                 case "Value":
-                    ForceUpdateValue();
+                    action = ForceUpdateValue;
                     break;
 
                 case "FriendlyName":
-                    ForceUpdateName();
+                    action = ForceUpdateName;
                     break;
 
                 case "Units":
-                    ForceUpdateUnits();
+                    action = ForceUpdateUnits;
                     break;
 
                 default:
                     // If we a here - it's may be bad. FIXME: Add diagnostics/logging/etc.
                     break;
+            }
+
+            if (action != null)
+            {
+                m_panel.Invoke(action);
             }
         }
 
