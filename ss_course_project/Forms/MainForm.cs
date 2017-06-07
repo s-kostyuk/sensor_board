@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ss_course_project.services.Repositories;
+using ss_course_project.services.Settings;
 
 /*****************************************************************************/
 
@@ -134,15 +135,23 @@ namespace ss_course_project.gui.Forms
 
         private void panelAddCard_Click(object sender, EventArgs e)
         {
-            int new_index = this.panelCards.Controls.Count - 1;
-
             
+            MqttSensorSetting s = new MqttSensorSetting();
 
-            Panel new_panel = get_standart_panel(new_index);
+            FormAddSensor form = new FormAddSensor(null, ref s);
 
-            this.panelCards.Controls.Add(new_panel);
+            DialogResult result = form.ShowDialog();
 
-            movePanelAddCard(new_index + 1);
+            if (result == DialogResult.OK)
+            {
+                int new_index = this.panelCards.Controls.Count - 1;
+
+                Panel new_panel = get_standart_panel(new_index);
+
+                this.panelCards.Controls.Add(new_panel);
+
+                movePanelAddCard(new_index + 1);
+            }
         }
 
         /*-------------------------------------------------------------------*/
