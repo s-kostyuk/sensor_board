@@ -41,7 +41,14 @@ namespace ss_course_project.gui.Forms
         {
             foreach (var item in m_controller.Sensors.Sensors)
             {
+                Panel panel = AddPanelCard();
 
+                Updaters.PanelSensorUpdater updater 
+                    = new Updaters.PanelSensorUpdater(item, panel);
+
+                updaters.PanelSensorUpdaters.Add(updater);
+
+                updater.ForceUpdateAll();
             }
         }
 

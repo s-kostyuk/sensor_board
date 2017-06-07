@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using ss_course_project.services;
 using ss_course_project.gui.Forms;
 
 namespace ss_course_project.gui
@@ -18,7 +19,20 @@ namespace ss_course_project.gui
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(null));
+
+            form = new MainForm(controller);
+            Start();
+            Application.Run(form);
+            
         }
+
+        static async void Start()
+        {
+            await controller.Init();
+            form.FillByController();   
+        }
+
+        static MainForm form;
+        static Controller controller = new Controller();
     }
 }
