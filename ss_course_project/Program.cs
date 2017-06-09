@@ -23,6 +23,7 @@ namespace ss_course_project.gui
             Application.SetCompatibleTextRenderingDefault(false);
 
             form = new MainForm(controller);
+            lost_form = new ConnectionLostForm();
 
             Start();
 
@@ -57,9 +58,8 @@ namespace ss_course_project.gui
                 }
                 catch (MqttClientException)
                 {
-                    Form lost_form = new ConnectionLostForm();
                     DialogResult result = lost_form.ShowDialog();
-                    lost_form.Dispose();
+                    
                     
                     if (result == DialogResult.Abort)
                     {
@@ -77,5 +77,6 @@ namespace ss_course_project.gui
 
         static MainForm form;
         static Controller controller = new Controller();
+        static Form lost_form;
     }
 }
