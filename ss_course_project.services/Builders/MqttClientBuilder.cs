@@ -16,6 +16,11 @@ namespace ss_course_project.services.Settings
             IMqttClient client;
             client = await MqttClient.CreateAsync(settings.Host, settings.Port);
 
+            return client;
+        }
+
+        public static async Task Connect(IMqttClient client, MqttClientSetting settings)
+        {
             await client.ConnectAsync(
                 new MqttClientCredentials(
                       clientId: settings.ClientPubicId
@@ -23,9 +28,7 @@ namespace ss_course_project.services.Settings
                     , password: settings.Password
                     )
                 );
-
-
-            return client;
         }
+
     }
 }

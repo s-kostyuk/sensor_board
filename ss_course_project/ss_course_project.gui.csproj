@@ -87,6 +87,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ConnectionLostForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConnectionLostForm.Designer.cs">
+      <DependentUpon>ConnectionLostForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormAddSensor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Updaters\PanelSensorUpdater.cs" />
     <Compile Include="Updaters\UpdatersRepository.cs" />
+    <EmbeddedResource Include="Forms\ConnectionLostForm.resx">
+      <DependentUpon>ConnectionLostForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAddSensor.resx">
       <DependentUpon>FormAddSensor.cs</DependentUpon>
     </EmbeddedResource>

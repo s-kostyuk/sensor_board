@@ -58,11 +58,28 @@ namespace ss_course_project.services
 
             foreach (var item in m_settings.SensorSettings)
             {
-                MqttTempSensor sensor = await m_sensor_builder.Build(item.Value);
+                MqttTempSensor sensor = m_sensor_builder.Build(item.Value);
                 m_sensors.Sensors.Add(sensor);
             }
 
             SaveSettings();
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        public async Task ConnectAll()
+        {
+            foreach (var item in m_settings.ClientSettings)
+            {
+                IMqttClient client = m_connections.GetClient(item.Key);
+                await MqttClientBuilder.Connect(client, item.Value);
+            }
+
+            foreach (var item in m_settings.SensorSettings)
+            {
+                IMqttClient client = m_connections.GetClient(item.Value.ConnectionId);
+                await m_sensor_builder.SubscribeTopics(client, item.Value);
+            }
         }
 
         /*-------------------------------------------------------------------*/
