@@ -10,7 +10,7 @@ using ss_course_project.services.Model;
 
 namespace ss_course_project.services.Repositories
 {
-    public class SensorsRepository
+    public class SensorsRepository : IDisposable
     {
         /*-------------------------------------------------------------------*/
 
@@ -25,7 +25,10 @@ namespace ss_course_project.services.Repositories
 
         /*-------------------------------------------------------------------*/
 
-
+        public void Dispose()
+        {
+            Sensors.Clear();
+        }
 
         /*-------------------------------------------------------------------*/
     }

@@ -40,6 +40,7 @@ namespace ss_course_project.services
 
         public void Dispose()
         {
+            m_sensors.Dispose();
             m_connections.Dispose();
         }
 

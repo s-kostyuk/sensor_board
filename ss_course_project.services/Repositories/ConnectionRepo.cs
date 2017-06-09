@@ -44,6 +44,8 @@ namespace ss_course_project.services.Repositories
             {
                 item.Value.Dispose();
             }
+
+            m_clients.Clear();
         }
 
         // FIXME: CC2

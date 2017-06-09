@@ -47,20 +47,20 @@ namespace ss_course_project.gui
         
         static async void Start()
         {
-            await controller.Init();
-
             while (true)
             {
                 try
                 {
+                    await controller.Init();
                     await controller.ConnectAll();
                     break;
                 }
                 catch (MqttClientException)
                 {
                     DialogResult result = lost_form.ShowDialog();
-                    
-                    
+
+                    controller.Dispose();
+
                     if (result == DialogResult.Abort)
                     {
                         exit();
