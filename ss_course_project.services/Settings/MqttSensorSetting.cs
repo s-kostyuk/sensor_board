@@ -14,6 +14,7 @@ namespace ss_course_project.services.Settings
         public string Topic { get; set; }
         public MqttQualityOfService QosLevel { get; set; }
         public string FriendlyName { get; set; }
+        public string Units { get; set; }
     }
 }
 
