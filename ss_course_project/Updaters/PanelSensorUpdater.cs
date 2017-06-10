@@ -17,7 +17,7 @@ namespace ss_course_project.gui.Updaters
 
         /*-------------------------------------------------------------------*/
 
-        public PanelSensorUpdater(MqttTempSensor source_sensor, Panel target_panel)
+        public PanelSensorUpdater(MqttDoubleSensor source_sensor, Panel target_panel)
         {
             CheckPanel(target_panel);
 
@@ -138,7 +138,7 @@ namespace ss_course_project.gui.Updaters
         /*-------------------------------------------------------------------*/
 
         private Panel m_panel;
-        private MqttTempSensor m_sensor;
+        private MqttDoubleSensor m_sensor;
 
         /*-------------------------------------------------------------------*/
     }

@@ -14,13 +14,13 @@ namespace ss_course_project.services.Repositories
     {
         /*-------------------------------------------------------------------*/
 
-        public HashSet<MqttTempSensor> Sensors { get; private set; }
+        public HashSet<MqttDoubleSensor> Sensors { get; private set; }
 
         /*-------------------------------------------------------------------*/
 
         public SensorsRepository()
         {
-            Sensors = new HashSet<MqttTempSensor>();
+            Sensors = new HashSet<MqttDoubleSensor>();
         }
 
         /*-------------------------------------------------------------------*/

@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ss_course_project.services;
-using ss_course_project.services.Repositories;
+using ss_course_project.services.Model;
 using ss_course_project.services.Settings;
+using ss_course_project.gui.Utils;
 
 /*****************************************************************************/
 
@@ -33,6 +34,8 @@ namespace ss_course_project.gui.Forms
             m_controller = controller;
 
             InitializeComponent();
+
+            panelAddCard.Size = standart_card_size;
         }
 
         /*-------------------------------------------------------------------*/
@@ -41,15 +44,22 @@ namespace ss_course_project.gui.Forms
         {
             foreach (var item in m_controller.Sensors.Sensors)
             {
-                Panel panel = AddPanelCard();
-
-                Updaters.PanelSensorUpdater updater 
-                    = new Updaters.PanelSensorUpdater(item, panel);
-
-                updaters.PanelSensorUpdaters.Add(updater);
-
-                updater.ForceUpdateAll();
+                AddCardBySensor(item);
             }
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        private void AddCardBySensor(MqttDoubleSensor sensor)
+        {
+            Panel panel = AddPanelCard();
+
+            Updaters.PanelSensorUpdater updater
+                = new Updaters.PanelSensorUpdater(sensor, panel);
+
+            updaters.PanelSensorUpdaters.Add(updater);
+
+            updater.ForceUpdateAll();
         }
 
         /*-------------------------------------------------------------------*/
@@ -167,20 +177,37 @@ namespace ss_course_project.gui.Forms
         }
 
         /*-------------------------------------------------------------------*/
-
-        private void panelAddCard_Click(object sender, EventArgs e)
+        
+        private void GetSensorSettingAndAddCard()
         {
-            
-            MqttSensorSetting s = new MqttSensorSetting();
+            var s = new Envelope<MqttSensorSetting>();
+            s.Value = new MqttSensorSetting();
 
-            FormAddSensor form = new FormAddSensor(null, ref s);
+            FormAddSensor form = new FormAddSensor(m_controller.Connections, s);
 
             DialogResult result = form.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                AddPanelCard();
+                try
+                {
+                    MqttDoubleSensor sensor = m_controller.AddNewSensor(s.Value);
+                    AddCardBySensor(sensor);
+                }
+                catch
+                {
+                    // failed to add sensor
+                    Form nf = new Form();
+                    nf.ShowDialog();
+                }
             }
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        private void panelAddCard_Click(object sender, EventArgs e)
+        {
+            GetSensorSettingAndAddCard();
         }
 
         /*-------------------------------------------------------------------*/

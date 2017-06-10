@@ -36,6 +36,7 @@ namespace ss_course_project.gui
 
         static void exit()
         {
+            controller.SaveSettings();
             controller.Dispose();
             Application.ExitThread();
         }

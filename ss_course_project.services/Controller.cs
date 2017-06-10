@@ -24,6 +24,19 @@ namespace ss_course_project.services
     {
         /*-------------------------------------------------------------------*/
 
+        public static readonly string DEFAULT_CONFIG_FOLDER 
+            = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+                , "Sensor-Board"
+                ); 
+
+        public static readonly string DEFAULT_CONFIG_NAME = "settings.json";
+
+        public static readonly string DEFAULT_CONFIG_PATH 
+            = Path.Combine(DEFAULT_CONFIG_FOLDER, DEFAULT_CONFIG_NAME);
+
+        /*-------------------------------------------------------------------*/
+
         public SensorsRepository Sensors { get { return m_sensors; } }
         public ConnectionRepo Connections { get { return m_connections; } }
         public SettingsRepository Settings { get { return m_settings; } }
@@ -59,11 +72,9 @@ namespace ss_course_project.services
 
             foreach (var item in m_settings.SensorSettings)
             {
-                MqttTempSensor sensor = m_sensor_builder.Build(item.Value);
+                MqttDoubleSensor sensor = m_sensor_builder.Build(item.Value);
                 m_sensors.Sensors.Add(sensor);
             }
-
-            SaveSettings();
         }
 
         /*-------------------------------------------------------------------*/
@@ -87,12 +98,24 @@ namespace ss_course_project.services
 
         public void RestoreSettings()
         {
-            string path = "settings2.json";
+            if (! File.Exists(DEFAULT_CONFIG_PATH))
+            {
+                this.m_settings = new SettingsRepository(); // Using defaults
+            }
+            else
+            {
+                this.RestoreSettings(DEFAULT_CONFIG_PATH);
+            }
+        }
 
+        /*-------------------------------------------------------------------*/
+
+        public void RestoreSettings(string path)
+        {
             StreamReader reader = new StreamReader(
                 File.Open(path, FileMode.Open)
                 );
-
+            
             string source_data = reader.ReadToEnd();
 
             m_settings = JsonConvert.DeserializeObject<SettingsRepository>(source_data);
@@ -104,7 +127,17 @@ namespace ss_course_project.services
 
         public void SaveSettings()
         {
-            string path = "settings2.json";
+            this.SaveSettings(DEFAULT_CONFIG_PATH);
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        public void SaveSettings(string path)
+        {
+            if (! Directory.Exists(DEFAULT_CONFIG_FOLDER))
+            {
+                Directory.CreateDirectory(DEFAULT_CONFIG_FOLDER);
+            }
 
             StreamWriter writer = new StreamWriter(
                 File.Open(path, FileMode.OpenOrCreate)
@@ -115,6 +148,17 @@ namespace ss_course_project.services
                 ));
 
             writer.Dispose();
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        public MqttDoubleSensor AddNewSensor(MqttSensorSetting setting)
+        {
+            MqttDoubleSensor sensor = m_sensor_builder.Build(setting);
+            m_sensors.Sensors.Add(sensor);
+            m_settings.AddSensorSetting(setting.Id, setting);
+
+            return sensor;
         }
 
         /*-------------------------------------------------------------------*/

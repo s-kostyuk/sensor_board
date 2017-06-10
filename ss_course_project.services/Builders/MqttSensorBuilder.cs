@@ -33,10 +33,11 @@ namespace ss_course_project.services.Settings
             m_connections = connections;
         }
 
-        public MqttTempSensor Build(MqttSensorSetting settings)
+
+        public MqttDoubleSensor Build(MqttSensorSetting settings)
         {
             IMqttClient client = m_connections.GetClient(settings.ConnectionId);
-            MqttTempSensor sensor = new MqttTempSensor(settings.Id, settings.Topic, settings.Units);
+            MqttDoubleSensor sensor = new MqttDoubleSensor(settings.Id, settings.Topic, settings.Units);
             sensor.FriendlyName = settings.FriendlyName;
             
             // FIXME: CC7
