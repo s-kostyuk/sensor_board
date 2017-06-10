@@ -33,6 +33,8 @@ namespace ss_course_project.gui.Forms
             m_controller = controller;
 
             InitializeComponent();
+
+            panelAddCard.Size = standart_card_size;
         }
 
         /*-------------------------------------------------------------------*/
