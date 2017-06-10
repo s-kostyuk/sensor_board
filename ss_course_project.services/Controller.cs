@@ -71,7 +71,7 @@ namespace ss_course_project.services
 
             foreach (var item in m_settings.SensorSettings)
             {
-                MqttTempSensor sensor = await m_sensor_builder.Build(item.Value);
+                MqttDoubleSensor sensor = await m_sensor_builder.Build(item.Value);
                 m_sensors.Sensors.Add(sensor);
             }
         }
@@ -134,9 +134,9 @@ namespace ss_course_project.services
 
         /*-------------------------------------------------------------------*/
 
-        public async Task<MqttTempSensor> AddNewSensor(MqttSensorSetting setting)
+        public async Task<MqttDoubleSensor> AddNewSensor(MqttSensorSetting setting)
         {
-            MqttTempSensor sensor = await m_sensor_builder.Build(setting);
+            MqttDoubleSensor sensor = await m_sensor_builder.Build(setting);
             m_sensors.Sensors.Add(sensor);
             m_settings.AddSensorSetting(setting.Id, setting);
 

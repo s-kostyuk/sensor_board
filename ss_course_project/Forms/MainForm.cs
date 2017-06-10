@@ -50,7 +50,7 @@ namespace ss_course_project.gui.Forms
 
         /*-------------------------------------------------------------------*/
 
-        private void AddCardBySensor(MqttTempSensor sensor)
+        private void AddCardBySensor(MqttDoubleSensor sensor)
         {
             Panel panel = AddPanelCard();
 
@@ -191,7 +191,7 @@ namespace ss_course_project.gui.Forms
             {
                 try
                 {
-                    MqttTempSensor sensor = await m_controller.AddNewSensor(s.Value);
+                    MqttDoubleSensor sensor = await m_controller.AddNewSensor(s.Value);
                     AddCardBySensor(sensor);
                 }
                 catch

@@ -43,7 +43,7 @@ namespace ss_course_project.test_app
 
         private static void Sensor_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            MqttTempSensor sensor = (MqttTempSensor)sender;
+            MqttDoubleSensor sensor = (MqttDoubleSensor)sender;
 
             Console.WriteLine(
                 string.Format(

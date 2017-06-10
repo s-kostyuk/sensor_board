@@ -12,11 +12,11 @@ using System.Net.Mqtt;
 
 namespace ss_course_project.services.Model
 {
-    public class MqttTempSensor : MqttSensor<double>
+    public class MqttDoubleSensor : MqttSensor<double>
     {
         /*-------------------------------------------------------------------*/
 
-        public MqttTempSensor(Guid id, string topic, string units = "°C")
+        public MqttDoubleSensor(Guid id, string topic, string units = "°C")
             : base(id, topic, units)
         {
         }

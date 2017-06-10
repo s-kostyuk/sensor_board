@@ -10,22 +10,25 @@ using ss_course_project.services.Model;
 
 namespace ss_course_project.services.Repositories
 {
-    public class SensorsRepository
+    public class SensorsRepository : IDisposable
     {
         /*-------------------------------------------------------------------*/
 
-        public HashSet<MqttTempSensor> Sensors { get; private set; }
+        public HashSet<MqttDoubleSensor> Sensors { get; private set; }
 
         /*-------------------------------------------------------------------*/
 
         public SensorsRepository()
         {
-            Sensors = new HashSet<MqttTempSensor>();
+            Sensors = new HashSet<MqttDoubleSensor>();
         }
 
         /*-------------------------------------------------------------------*/
 
-
+        public void Dispose()
+        {
+            Sensors.Clear();
+        }
 
         /*-------------------------------------------------------------------*/
     }
