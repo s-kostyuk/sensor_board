@@ -21,17 +21,15 @@ namespace ss_course_project.gui
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            
             form = new MainForm(controller);
             lost_form = new ConnectionLostForm();
 
-            form.Show();
-
-            Start();
-            
             form.FormClosed += m_mainForm_FormClosed;
 
-            Application.Run();
+            Start();
+
+            Application.Run(form);
         }
 
         static void exit(bool isForced = false)
@@ -50,7 +48,15 @@ namespace ss_course_project.gui
             }
 
             controller.Dispose();
-            Application.ExitThread();
+
+            if (isForced)
+            {
+                Environment.Exit(1);
+            }
+            else
+            {
+                Application.Exit();
+            }
         }
 
         static void m_mainForm_FormClosed(object sender, FormClosedEventArgs e)
