@@ -25,22 +25,23 @@ namespace ss_course_project.gui
             form = new MainForm(controller);
             lost_form = new ConnectionLostForm();
 
-            Start();
-
             form.Show();
 
+            Start();
+            
             form.FormClosed += m_mainForm_FormClosed;
 
             Application.Run();
         }
 
-        static void exit()
+        static void exit(bool isForced = false)
         {
             var result = MessageBox.Show(
                 "Save settings?"
                 , "Exit dialog"
                 , MessageBoxButtons.YesNo
                 , MessageBoxIcon.Exclamation
+                , isForced ? MessageBoxDefaultButton.Button2 : MessageBoxDefaultButton.Button1
                 );
 
             if (result == DialogResult.Yes)
@@ -65,7 +66,6 @@ namespace ss_course_project.gui
                 {
                     await controller.Init();
                     await controller.ConnectAll();
-                    break;
                 }
                 catch (MqttClientException)
                 {
@@ -75,13 +75,20 @@ namespace ss_course_project.gui
 
                     if (result == DialogResult.Abort)
                     {
-                        exit();
+                        exit(isForced: true);
                     }
                     else
                     {
                         continue;
                     }
                 }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    exit(isForced: true);
+                }
+
+                break;
             }
             
             form.FillByController();
