@@ -29,6 +29,7 @@ namespace ss_course_project.test_app
         private static async void Init()
         {
             await controller.Init();
+            await controller.ConnectAll();
             SubscribeSensors();
         }
 
