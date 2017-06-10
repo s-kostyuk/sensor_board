@@ -90,7 +90,7 @@
     <Compile Include="Model\IMqttSensor.cs" />
     <Compile Include="Model\ISensor.cs" />
     <Compile Include="Model\MqttSensor.cs" />
-    <Compile Include="Model\MqttTempSensor.cs" />
+    <Compile Include="Model\MqttDoubleSensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ConnectionRepo.cs" />
     <Compile Include="Repositories\SensorsRepository.cs" />

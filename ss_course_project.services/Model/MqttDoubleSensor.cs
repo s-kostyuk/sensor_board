@@ -16,7 +16,7 @@ namespace ss_course_project.services.Model
     {
         /*-------------------------------------------------------------------*/
 
-        public MqttDoubleSensor(Guid id, string topic, string units = "°C")
+        public MqttDoubleSensor(Guid id, string topic, string units)
             : base(id, topic, units)
         {
         }
