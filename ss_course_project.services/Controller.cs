@@ -112,15 +112,14 @@ namespace ss_course_project.services
 
         public void RestoreSettings(string path)
         {
-            StreamReader reader = new StreamReader(
+            using (StreamReader reader = new StreamReader(
                 File.Open(path, FileMode.Open)
-                );
-            
-            string source_data = reader.ReadToEnd();
+                ))
+            {
+                string source_data = reader.ReadToEnd();
 
-            m_settings = JsonConvert.DeserializeObject<SettingsRepository>(source_data);
-
-            reader.Dispose();
+                m_settings = JsonConvert.DeserializeObject<SettingsRepository>(source_data);
+            }
         }
 
         /*-------------------------------------------------------------------*/
@@ -139,15 +138,15 @@ namespace ss_course_project.services
                 Directory.CreateDirectory(DEFAULT_CONFIG_FOLDER);
             }
 
-            StreamWriter writer = new StreamWriter(
+            using (StreamWriter writer = new StreamWriter(
                 File.Open(path, FileMode.OpenOrCreate)
-                );
+                ))
+            {
 
-            writer.Write(JsonConvert.SerializeObject(
-                m_settings, Formatting.Indented
-                ));
-
-            writer.Dispose();
+                writer.Write(JsonConvert.SerializeObject(
+                    m_settings, Formatting.Indented
+                    ));
+            }
         }
 
         /*-------------------------------------------------------------------*/
