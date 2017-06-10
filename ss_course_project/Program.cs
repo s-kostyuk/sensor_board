@@ -33,6 +33,7 @@ namespace ss_course_project.gui
 
         static void m_mainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            controller.SaveSettings();
             controller.Dispose();
             Application.ExitThread();
         }

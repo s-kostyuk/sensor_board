@@ -74,8 +74,6 @@ namespace ss_course_project.services
                 MqttTempSensor sensor = await m_sensor_builder.Build(item.Value);
                 m_sensors.Sensors.Add(sensor);
             }
-
-            SaveSettings();
         }
 
         /*-------------------------------------------------------------------*/
@@ -140,6 +138,7 @@ namespace ss_course_project.services
         {
             MqttTempSensor sensor = await m_sensor_builder.Build(setting);
             m_sensors.Sensors.Add(sensor);
+            m_settings.AddSensorSetting(setting.Id, setting);
 
             return sensor;
         }
