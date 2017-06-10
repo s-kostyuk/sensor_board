@@ -33,7 +33,18 @@ namespace ss_course_project.gui
 
         static void m_mainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            controller.SaveSettings();
+            var result = MessageBox.Show(
+                "Save settings?"
+                , "Exit dialog"
+                , MessageBoxButtons.YesNo
+                , MessageBoxIcon.Exclamation
+                );
+
+            if (result == DialogResult.Yes)
+            {
+                controller.SaveSettings();
+            }
+
             controller.Dispose();
             Application.ExitThread();
         }
