@@ -23,6 +23,11 @@ namespace ss_course_project.services.Repositories
 {
     public class ConnectionRepo : IDisposable
     {
+        public IReadOnlyDictionary<Guid, IMqttClient> Clients
+        {
+            get { return m_clients; }
+        }
+
         public ConnectionRepo()
         {
 

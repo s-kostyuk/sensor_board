@@ -136,6 +136,16 @@ namespace ss_course_project.services
 
         /*-------------------------------------------------------------------*/
 
+        public async Task<MqttTempSensor> AddNewSensor(MqttSensorSetting setting)
+        {
+            MqttTempSensor sensor = await m_sensor_builder.Build(setting);
+            m_sensors.Sensors.Add(sensor);
+
+            return sensor;
+        }
+
+        /*-------------------------------------------------------------------*/
+
         private void GenerateSettings()
         {
 
