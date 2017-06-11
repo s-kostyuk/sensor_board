@@ -51,18 +51,23 @@ namespace ss_course_project.services
 
         /*-------------------------------------------------------------------*/
 
-        public void Dispose()
+        public void RemoveConnections()
         {
             m_connections.Dispose();
+            m_sensors.Dispose();
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        public void Dispose()
+        {
+            RemoveConnections();
         }
 
         /*-------------------------------------------------------------------*/
 
         public async Task Init()
         {
-            RestoreSettings();
-            //GenerateSettings();
-
             foreach (var item in m_settings.ClientSettings)
             {
                 IMqttClient client = await MqttClientBuilder.Build(item.Value);
@@ -94,13 +99,22 @@ namespace ss_course_project.services
 
         public void RestoreSettings(string path)
         {
-            using (StreamReader reader = new StreamReader(
-                File.Open(path, FileMode.Open)
-                ))
+            try
             {
-                string source_data = reader.ReadToEnd();
+                using (StreamReader reader = new StreamReader(
+                    File.Open(path, FileMode.Open)
+                    ))
+                {
+                    string source_data = reader.ReadToEnd();
 
-                m_settings = JsonConvert.DeserializeObject<SettingsRepository>(source_data);
+                    m_settings = JsonConvert.DeserializeObject<SettingsRepository>(source_data);
+                }
+            }
+            catch (Exception e)
+            {
+                e.Data.Add("ConfigPath", path);
+
+                throw e;
             }
         }
 

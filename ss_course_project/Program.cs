@@ -31,13 +31,14 @@ namespace ss_course_project.gui
             Application.Run();
         }
 
-        static void m_mainForm_FormClosed(object sender, FormClosedEventArgs e)
+        static void CleanupAndExit(bool isForced = false)
         {
             var result = MessageBox.Show(
                 "Save settings?"
                 , "Exit dialog"
                 , MessageBoxButtons.YesNo
                 , MessageBoxIcon.Exclamation
+                , isForced ? MessageBoxDefaultButton.Button2 : MessageBoxDefaultButton.Button1
                 );
 
             if (result == DialogResult.Yes)
@@ -45,13 +46,21 @@ namespace ss_course_project.gui
                 controller.SaveSettings();
             }
 
+            form.FormClosed -= m_mainForm_FormClosed;
+
             controller.Dispose();
-            Application.ExitThread();
+            Application.Exit();
         }
-        
+
+        static void m_mainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CleanupAndExit();
+        }
+
         static async void Start()
         {
-            await controller.Init();
+            RestoreSettingsOrExit();
+            await ControllerInitOrExit();
 
             if (form.InvokeRequired)
             {
@@ -61,9 +70,66 @@ namespace ss_course_project.gui
             {
                 form.FillByController();
             }
-              
+
         }
 
+        static void RestoreSettingsOrExit()
+        {
+            try
+            {
+                controller.RestoreSettings();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    string.Format(
+                        "{0}\n\nPlease, fix or remove config file at {1}\n\nApplication will be closed"
+                        , e.Message
+                        , (string)e.Data["ConfigPath"]
+                    )
+                    , "Failed to restore settings"
+                    , MessageBoxButtons.OK
+                    , MessageBoxIcon.Error
+                    );
+
+                CleanupAndExit();
+            }
+        }
+
+        static async Task ControllerInitOrExit()
+        {
+            while (true)
+            {
+                try
+                {
+                    await controller.Init();
+                    break;
+                }
+                catch (Exception e)
+                {
+                    DialogResult result = MessageBox.Show(
+                    string.Format(
+                        "{0}\n\nPlease, check your settings and broker availability"
+                        , e.Message
+                    )
+                    , "Failed to restore connection"
+                    , MessageBoxButtons.RetryCancel
+                    , MessageBoxIcon.Error
+                    );
+
+                    if (result == DialogResult.Retry)
+                    {
+                        controller.RemoveConnections();
+                        continue;
+                    }
+                    else
+                    {
+                        CleanupAndExit();
+                    }
+                }
+            }
+        }
+        
         static MainForm form;
         static Controller controller = new Controller();
         static Task start_task = new Task(Start);
