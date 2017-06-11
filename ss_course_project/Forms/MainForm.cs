@@ -194,11 +194,14 @@ namespace ss_course_project.gui.Forms
                     MqttDoubleSensor sensor = await m_controller.AddNewSensor(s.Value);
                     AddCardBySensor(sensor);
                 }
-                catch
+                catch (Exception e)
                 {
-                    // failed to add sensor
-                    Form nf = new Form();
-                    nf.ShowDialog();
+                    MessageBox.Show(
+                        string.Format("{0}\n\n{1}", e.Message, "Sensor will not be added")
+                        , "Failed to add sensor"
+                        , MessageBoxButtons.OK
+                        , MessageBoxIcon.Information
+                        );
                 }
             }
         }
