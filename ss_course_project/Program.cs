@@ -22,7 +22,7 @@ namespace ss_course_project.gui
 
             form = new MainForm(controller);
 
-            Start();
+            start_task.Start();
 
             form.Show();
 
@@ -52,10 +52,20 @@ namespace ss_course_project.gui
         static async void Start()
         {
             await controller.Init();
-            form.FillByController();   
+
+            if (form.InvokeRequired)
+            {
+                form.Invoke(new Action(form.FillByController));
+            }
+            else
+            {
+                form.FillByController();
+            }
+              
         }
 
         static MainForm form;
         static Controller controller = new Controller();
+        static Task start_task = new Task(Start);
     }
 }
