@@ -4,13 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*****************************************************************************/
+
 using ss_course_project.services;
 using ss_course_project.gui.Forms;
+
+/*****************************************************************************/
 
 namespace ss_course_project.gui
 {
     static class Program
     {
+        /*-------------------------------------------------------------------*/
+
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -30,6 +36,8 @@ namespace ss_course_project.gui
 
             Application.Run();
         }
+
+        /*-------------------------------------------------------------------*/
 
         static void CleanupAndExit(bool isForced = false)
         {
@@ -52,10 +60,14 @@ namespace ss_course_project.gui
             Application.Exit();
         }
 
+        /*-------------------------------------------------------------------*/
+
         static void m_mainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             CleanupAndExit();
         }
+
+        /*-------------------------------------------------------------------*/
 
         static async void Start()
         {
@@ -70,8 +82,9 @@ namespace ss_course_project.gui
             {
                 form.FillByController();
             }
-
         }
+
+        /*-------------------------------------------------------------------*/
 
         static void RestoreSettingsOrExit()
         {
@@ -95,6 +108,8 @@ namespace ss_course_project.gui
                 CleanupAndExit();
             }
         }
+
+        /*-------------------------------------------------------------------*/
 
         static async Task ControllerInitOrExit()
         {
@@ -129,9 +144,13 @@ namespace ss_course_project.gui
                 }
             }
         }
-        
+
+        /*-------------------------------------------------------------------*/
+
         static MainForm form;
         static Controller controller = new Controller();
         static Task start_task = new Task(Start);
+
+        /*-------------------------------------------------------------------*/
     }
 }
