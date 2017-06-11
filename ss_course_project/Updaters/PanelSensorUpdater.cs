@@ -63,7 +63,15 @@ namespace ss_course_project.gui.Updaters
 
             if (action != null)
             {
-                m_panel.Invoke(action);
+                if (m_panel.InvokeRequired)
+                {
+                    m_panel.Invoke(action);
+                }
+                else
+                {
+                    MessageBox.Show("Invoke not required", "M_sensor_PropertyChanged()");
+                    action();
+                }
             }
         }
 

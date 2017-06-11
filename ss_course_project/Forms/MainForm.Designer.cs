@@ -33,6 +33,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableLargePanelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fIllByControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelCards.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -62,7 +63,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.updateToolStripMenuItem,
-            this.enableLargePanelToolStripMenuItem});
+            this.enableLargePanelToolStripMenuItem,
+            this.fIllByControllerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(501, 24);
@@ -82,6 +84,13 @@
             this.enableLargePanelToolStripMenuItem.Size = new System.Drawing.Size(118, 20);
             this.enableLargePanelToolStripMenuItem.Text = "Enable Large Panel";
             this.enableLargePanelToolStripMenuItem.Click += new System.EventHandler(this.enableLargePanelToolStripMenuItem_Click);
+            // 
+            // fIllByControllerToolStripMenuItem
+            // 
+            this.fIllByControllerToolStripMenuItem.Name = "fIllByControllerToolStripMenuItem";
+            this.fIllByControllerToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
+            this.fIllByControllerToolStripMenuItem.Text = "FIll by controller";
+            this.fIllByControllerToolStripMenuItem.Click += new System.EventHandler(this.fIllByControllerToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -108,6 +117,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableLargePanelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fIllByControllerToolStripMenuItem;
     }
 }
 

@@ -31,6 +31,7 @@ namespace ss_course_project.gui.Forms
 
         public MainForm(Controller controller)
         {
+            MessageBox.Show(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString(), "Mainform init()");
             m_controller = controller;
 
             InitializeComponent();
@@ -42,6 +43,12 @@ namespace ss_course_project.gui.Forms
 
         public void FillByController()
         {
+            if (!Application.MessageLoop)
+            {
+                MessageBox.Show("No message loop existing", "FillByController()");
+            }
+
+            MessageBox.Show(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString(), "Fill by controller");
             foreach (var item in m_controller.Sensors.Sensors)
             {
                 AddCardBySensor(item);
@@ -207,6 +214,8 @@ namespace ss_course_project.gui.Forms
 
         private async void panelAddCard_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString(), "Panel add card click");
+
             await GetSensorSettingAndAddCard();
         }
 
@@ -241,6 +250,14 @@ namespace ss_course_project.gui.Forms
             this.panelCards.Controls.SetChildIndex(largeCard, 0);
 
             moveToLastPanelAddCard();
+        }
+
+        /*-------------------------------------------------------------------*/
+
+        private void fIllByControllerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString(), "Menu fill click");
+            this.FillByController();
         }
 
         /*-------------------------------------------------------------------*/

@@ -58,8 +58,10 @@ namespace ss_course_project.services
 
         /*-------------------------------------------------------------------*/
 
-        public async Task Init()
+        public async Task<int> Init()
         {
+            int th_id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
             RestoreSettings();
             //GenerateSettings();
 
@@ -74,6 +76,8 @@ namespace ss_course_project.services
                 MqttDoubleSensor sensor = await m_sensor_builder.Build(item.Value);
                 m_sensors.Sensors.Add(sensor);
             }
+            
+            return th_id;
         }
 
         /*-------------------------------------------------------------------*/
